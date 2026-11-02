@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 # Read Image
 
-img = cv2.imread(r"E:\3.2 semester\Image processing\lab\cameraman.jpg")
+img = cv2.imread(r"E:\Image-and-Speech-Lab-3.2\cameraman.jpg")
 
 if img is None:
     print("Error: Image not found. Check the file path.")

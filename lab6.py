@@ -1,81 +1,55 @@
-# Write a MATLAB/Python program to Character Segment of an image.  
+# Write a MATLAB/Python program to Character Segment of an image.
 
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
 
 # -----------------------------------
-# 1. Read the image
+# 1. Read image
 # -----------------------------------
-image = cv2.imread( r"E:\3.2 semester\Image processing\lab\image6.jpg", cv2.IMREAD_GRAYSCALE)
-
-# Display original image
-plt.figure(figsize=(10, 4))
-plt.imshow(image, cmap="gray")
-plt.title("Original Image")
-plt.axis("off")
-plt.show()
+image = cv2.imread("image6.jpg", cv2.IMREAD_GRAYSCALE)
 
 # -----------------------------------
 # 2. Convert image to binary
 # -----------------------------------
-_, binary = cv2.threshold(
-    image, 0, 255,
-    cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
-)
+_, binary = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
-# Display binary image
-plt.figure(figsize=(10, 4))
-plt.imshow(binary, cmap="gray")
-plt.title("Binary Image")
-plt.axis("off")
-plt.show()
+# If background is white, invert so characters become white
+if binary[0, 0] == 255:
+    binary = cv2.bitwise_not(binary)
 
 # -----------------------------------
 # 3. Find connected components
 # -----------------------------------
-num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(
-    binary,
-    connectivity=8
-)
-
-# List to store character images
-characters = []
+num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(binary)
 
 # -----------------------------------
 # 4. Extract individual characters
 # -----------------------------------
+characters = []
+
 for i in range(1, num_labels):
+    x, y, w, h, area = stats[i]
 
-    x = stats[i, cv2.CC_STAT_LEFT]
-    y = stats[i, cv2.CC_STAT_TOP]
-    w = stats[i, cv2.CC_STAT_WIDTH]
-    h = stats[i, cv2.CC_STAT_HEIGHT]
-    area = stats[i, cv2.CC_STAT_AREA]
-
-    # Remove very small noise
-    if area > 20:
-
+    # Filter out small noise
+    if area > 50:
         character = binary[y:y+h, x:x+w]
+        characters.append((x, character))
 
-        characters.append((x, y, w, h, character))
-
-# Sort characters from left to right
+# -----------------------------------
+# 5. Sort characters from left to right
+# -----------------------------------
 characters.sort(key=lambda c: c[0])
-
-# -----------------------------------
-# 5. Display segmented characters
-# -----------------------------------
-
 print("Number of segmented characters:", len(characters))
 
-plt.figure(figsize=(12, 4))
+# -----------------------------------
+# 6. Display segmented characters
+# -----------------------------------
+plt.figure(figsize=(10, 3))
 
-for i, (x, y, w, h, character) in enumerate(characters):
-
+for i, (x, character) in enumerate(characters):
     plt.subplot(1, len(characters), i + 1)
     plt.imshow(character, cmap="gray")
-    plt.title(str(i + 1))
+    plt.title(f"Char {i + 1}")
     plt.axis("off")
 
 plt.tight_layout()

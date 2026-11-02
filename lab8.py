@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Read image
-img = cv2.imread(r"E:\3.2 semester\Image processing\lab\coins.png")
+img = cv2.imread(r"E:\Image-and-Speech-Lab-3.2\coins.png")
 
 # Convert to grayscale
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

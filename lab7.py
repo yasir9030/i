@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # ---------------------------------------
 # 1. Read the image
 # ---------------------------------------
-image = cv2.imread(r"E:\3.2 semester\Image processing\lab\cameraman.jpg", cv2.IMREAD_GRAYSCALE)
+image = cv2.imread(r"E:\Image-and-Speech-Lab-3.2\cameraman.jpg", cv2.IMREAD_GRAYSCALE)
 
 # ---------------------------------------
 # 2. Sobel Edge Detection

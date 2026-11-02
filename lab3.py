@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Read image
-image = cv2.imread(r"E:\3.2 semester\Image processing\lab\cameraman.jpg", cv2.IMREAD_GRAYSCALE)
+image = cv2.imread(r"E:\Image-and-Speech-Lab-3.2\cameraman.jpg", cv2.IMREAD_GRAYSCALE)
 
 # 3x3 mask
 mask = np.array([
