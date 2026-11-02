@@ -8,6 +8,17 @@ import matplotlib.pyplot as plt
 # -----------------------------------
 image = cv2.imread("image6.jpg", cv2.IMREAD_GRAYSCALE)
 
+if image is None:
+    print("Error: Image not found!")
+    exit()
+
+# Display original image
+plt.figure(figsize=(8, 4))
+plt.imshow(image, cmap="gray")
+plt.title("Original Image")
+plt.axis("off")
+plt.show()
+
 # -----------------------------------
 # 2. Convert image to binary
 # -----------------------------------
@@ -16,6 +27,13 @@ _, binary = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 # If background is white, invert so characters become white
 if binary[0, 0] == 255:
     binary = cv2.bitwise_not(binary)
+
+# Display binary image
+plt.figure(figsize=(8, 4))
+plt.imshow(binary, cmap="gray")
+plt.title("Binary Image")
+plt.axis("off")
+plt.show()
 
 # -----------------------------------
 # 3. Find connected components
